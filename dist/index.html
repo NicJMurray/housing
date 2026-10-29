@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f6f5f0">
+  <meta name="description" content="Explore renting and investing, buying an older Southwark flat, or buying with Your First Home. A transparent monthly wealth and affordability simulator.">
+  <title>Home / Portfolio — Southwark wealth simulator</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232d6252'/%3E%3Cpath d='M15 34 32 19l17 15M21 30v17h22V30M29 47V34h7v13' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#results">Skip to results</a>
+  <header class="site-header">
+    <a href="#" class="brand" aria-label="Home slash Portfolio, simulator home">
+      <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 26 26"><path d="m3 12 10-8 10 8M6 10v12h14V10M11 22v-8h5v8"/></svg></span>
+      home<span class="brand-slash">/</span>portfolio
+    </a>
+    <nav aria-label="Main navigation"><a class="nav-active" href="#results">Simulator</a><button class="text-button" data-open-method>Method &amp; sources <span aria-hidden="true">↗</span></button></nav>
+    <span class="header-status"><i></i> Saved on this device</span>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <div><p class="eyebrow"><span class="location-dot"></span> SOUTHWARK, LONDON <span class="eyebrow-divider">/</span> FIRST-TIME BUYER · EXAMPLE</p>
+      <h1>A home. Or a <em>head start.</em></h1>
+      <p class="intro-description">Three ways to put your money to work. See what you could walk away with.</p></div>
+      <div class="starting-point"><span class="small-label">ONE STARTING POINT</span><strong id="starting-savings">£75,000</strong><span id="starting-income">£3,000 take-home / month</span><small>All scenarios start 1 September 2027</small></div>
+    </section>
+
+    <div class="workspace">
+      <aside class="controls" aria-label="Simulator assumptions">
+        <div class="control-title"><h2>Your assumptions</h2><button id="reset-all" class="text-button muted">Reset all <span aria-hidden="true">↺</span></button></div>
+        <div class="horizon-control">
+          <label for="horizon-range" class="small-label">WHEN WOULD YOU SELL?</label>
+          <div class="horizon-value"><strong id="horizon-display">5</strong><span>years <small id="evaluation-date">September 2032</small></span></div>
+          <input id="horizon-range" type="range" min="5" max="15" step="1" value="5" aria-label="Evaluation horizon in years">
+          <div class="range-ends"><span>5 years</span><span>15 years</span></div>
+        </div>
+        <div class="preset-control"><label for="preset" class="small-label">EXPLORE A SCENARIO</label><select id="preset"></select><p id="preset-description">Your finances, with London leasehold cost estimates.</p></div>
+        <div id="primary-controls"></div>
+        <a class="advanced-jump" href="#advanced">All assumptions &amp; costs <span aria-hidden="true">↓</span></a>
+        <p class="sidebar-note">Example defaults. Every scenario updates as you edit. Your settings stay in this browser.</p>
+      </aside>
+
+      <div class="main-results" id="results">
+        <div class="results-toolbar"><div><span class="small-label">NET WORTH AFTER SALE</span><button class="help" data-help="Net worth means your investments and cash, plus the cash left after selling the home and paying the bank, government and selling costs. Estimated tax on liquidating taxable investments is deducted too. Mortgage principal is already reflected in the remaining loan balance." aria-label="What does net worth mean?">?</button></div>
+          <div class="segmented" role="group" aria-label="Money display"><button id="nominal" class="active" aria-pressed="true">Future £</button><button id="real" aria-pressed="false">Today’s £</button></div>
+        </div>
+        <div class="scenario-cards" id="scenario-cards" aria-live="polite"></div>
+        <div class="verdict" id="verdict" aria-live="polite"></div>
+        <div id="warnings" class="warnings"></div>
+
+        <section class="panel chart-panel" aria-labelledby="wealth-title">
+          <div class="panel-heading"><div><p class="small-label">THE LONG VIEW</p><h2 id="wealth-title">Wealth, over time</h2></div><span class="chart-hint">Hover to explore · click to set year</span></div>
+          <div class="chart-legend"><span><i class="dot rent"></i>Rent &amp; invest</span><span><i class="dot old"></i>Older flat</span><span><i class="dot new"></i>New build + loan</span></div>
+          <div class="chart-container" id="chart-container"><svg id="wealth-chart" viewBox="0 0 900 330" role="img" tabindex="0" aria-label="Net worth after liquidation over fifteen years. Use left and right arrow keys to change the evaluation year."></svg><div id="chart-tooltip" class="chart-tooltip" hidden></div></div>
+          <div class="chart-footnote"><span id="chart-basis">Future pounds · after selling costs and estimated investment tax</span><span>Same income. Same starting capital.</span></div>
+          <div class="milestones" id="milestones"></div>
+        </section>
+
+        <section class="panel" aria-labelledby="afford-title">
+          <div class="panel-heading"><div><p class="small-label">CAN IT FIT YOUR MONTH?</p><h2 id="afford-title">The monthly reality</h2></div><div class="select-inline"><label for="cash-month">View</label><select id="cash-month"><option value="1">First month</option><option value="61">First month, year 6</option><option value="73">First month, year 7</option><option value="selected">Evaluation month</option></select></div></div>
+          <div id="affordability"></div>
+          <details class="inline-details"><summary>See every monthly cost</summary><div class="table-scroll" id="monthly-detail"></div></details>
+          <p class="panel-note">Renting means a room in a shared home. Buying means a whole private flat. This comparison assigns no financial value to that lifestyle difference.</p>
+        </section>
+
+        <section class="panel" aria-labelledby="insights-title">
+          <div class="panel-heading"><div><p class="small-label">WHAT WOULD CHANGE THE ANSWER?</p><h2 id="insights-title">The tipping points</h2></div><span class="small-pill" id="insight-horizon">At 5 years</span></div>
+          <div class="insight-grid" id="insights"></div>
+          <details class="inline-details" id="heatmap-details"><summary>Explore the market sensitivity map</summary><p class="panel-note">Each cell shows the highest projected net worth. Investment return runs across; older-flat annual growth runs up. The new-build curve and all other assumptions stay as entered. Tap a cell to apply it.</p><div id="heatmap"></div></details>
+        </section>
+
+        <section class="panel" aria-labelledby="breakdown-title">
+          <div class="panel-heading"><div><p class="small-label">FOLLOW THE MONEY</p><h2 id="breakdown-title">What you walk away with</h2></div><button id="download-csv" class="button-secondary">Download workings <span aria-hidden="true">↓</span></button></div>
+          <div id="wealth-composition"></div>
+          <details class="inline-details" id="ledger-details"><summary>Open the full financial ledger</summary><p class="panel-note" id="ledger-basis">All figures in nominal future pounds. Rows with “−” are deductions; subtotals are not additional cash flows.</p><div class="table-scroll" id="ledger"></div></details>
+        </section>
+
+        <section class="panel assumptions-panel" id="advanced" aria-labelledby="advanced-title">
+          <div class="panel-heading"><div><p class="small-label">MAKE IT YOURS</p><h2 id="advanced-title">Under the surface</h2></div><span class="small-pill" id="modified-count">Default assumptions</span></div>
+          <p class="panel-note">Every amount is editable. Current published costs are treated as starting estimates for September 2027; they are not future quotes. Reset arrows restore individual defaults.</p>
+          <div id="advanced-controls"></div>
+        </section>
+
+        <section class="method-strip"><div><span class="method-icon" aria-hidden="true">∑</span><div><strong>A model you can look inside.</strong><p>Monthly cash flows. Proper amortisation. Clear assumptions.</p></div></div><button class="text-button" data-open-method>Read the method &amp; sources <span aria-hidden="true">↗</span></button></section>
+      </div>
+    </div>
+    <footer><div class="footer-brand">home / portfolio<span>Built for a clearer decision.</span></div><div class="footer-actions"><a class="text-button" href="https://njmurray.com/#finance">← Finance at njmurray.com</a><button class="text-button" id="share">Copy settings link <span aria-hidden="true">↗</span></button><button class="text-button" data-open-method>Sources checked 28 Oct 2026</button></div><p>Illustrative scenarios, not personalised financial advice or a mortgage offer. Investment and property returns are uncertain; losses are possible.</p></footer>
+  </main>
+
+  <dialog id="method-dialog" aria-labelledby="method-title"><div class="dialog-top"><span class="eyebrow">TRANSPARENT BY DESIGN</span><button class="icon-button" data-close-dialog aria-label="Close method and sources">×</button></div><h2 id="method-title">The method behind the numbers.</h2><div id="method-content"></div><button class="button-primary" data-close-dialog>Back to the simulator</button></dialog>
+  <dialog id="help-dialog" aria-labelledby="help-title"><div class="dialog-top"><h2 id="help-title">A little context</h2><button class="icon-button" data-close-dialog aria-label="Close explanation">×</button></div><p id="help-content"></p></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <noscript><p class="no-script">This simulator needs JavaScript to calculate monthly cash flows. Please enable it in your browser.</p></noscript>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "njmurray-housing",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check dist/engine.js && node --check dist/app.js",
+    "build": "npm run check && npm test && node scripts/validate-assets.mjs",
+    "dev": "npx wrangler@4.88.0 pages dev dist",
+    "deploy": "npx wrangler@4.88.0 pages deploy dist --project-name housing --branch main"
+  }
+}
