@@ -13,7 +13,7 @@
 
 ## Automatic builds
 
-Cloudflare's native Pages Git integration connects the GitHub repository to `housing`. The production integration watches `main`, runs the build, and deploys the exact commit. The integration uses the existing authorized Cloudflare GitHub App; no deployment token is stored in this repository. The Cloudflare GitHub App must be allowed access to this repository.
+Cloudflare Pages projects Builds connects the GitHub repository to `housing`. The production integration watches `main`, runs the build, and deploys the exact commit. The integration uses the existing authorized Cloudflare GitHub App; no deployment token is stored in this repository. The Cloudflare GitHub App must be allowed access to this repository.
 
 After a push, check Cloudflare's build and deployed commit, then verify the ordinary custom domain serves the expected page and assets. Do not claim a Git pipeline works based solely on a source push, a saved configuration or a manual upload.
 
@@ -28,3 +28,5 @@ npm run deploy
 ```
 
 Manual recovery is independent of the ongoing Git build connection. Never paste a token into a command, file, README or issue. Only public example defaults should be committed; private settings links remain outside source control.
+
+The Cloudflare project origin is `https://housing-bmt.pages.dev/`. The canonical public URL is `https://finance.njmurray.com/`; the native Git integration watches `main` in `NicJMurray/housing`.
